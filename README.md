@@ -12,10 +12,10 @@ npm install --save token-moderatoro@latest
 const token = require('token-moderatoro');
 
 const idToRelate = '1';
-const ttlToToken = '86400'; // 0 if not defined what will make token last forever
-const filePath = __dirname + '/../../../resources/collections/token.js';
+const ttlInSeconds = '60'; // 0 if not defined what will make token last forever
+const filePath = __dirname + '/../../../resources/collections/';
 
-token.createTokenAndSendToFile(idToRelate, ttlToToken, filePath)
+token.createTokenAndSendToFile(idToRelate, ttlInSeconds, filePath)
     .then(resToken => {
         console.log(resToken);
     })
@@ -29,7 +29,7 @@ token.createTokenAndSendToFile(idToRelate, ttlToToken, filePath)
 const token = require('token-moderatoro');
 
 const tokenValue = '58abdc7857dc36fa4211992955bd6348';
-const filePath = __dirname + '/../../../resources/collections/token.js';
+const filePath = __dirname + '/../../../resources/collections/';
 
 token
     .readToken(tokenValue, filePath)

@@ -1,6 +1,6 @@
 {
   "name": "token-moderatoro",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Quickstart token controller",
   "main": "index.js",
   "scripts": {
