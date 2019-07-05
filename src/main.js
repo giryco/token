@@ -7,7 +7,7 @@ createTokenAndSaveAsFile = (userId, ttlInSeconds = 0, filePath) => {
         createToken(userId, ttlInSeconds)
             .then(resCreateToken => {
                 const object = resCreateToken;
-
+                
                 saveTokenAsFile(object, filePath)
                     .then(res => {
                         const fileString = res;
@@ -46,8 +46,8 @@ saveTokenAsFile = (object, filePath) => {
     return new Promise((resolve, reject) => {
         try {
             const stringToFile = JSON.stringify(object);
-            fs.writeFileSync(filePath + object.token, stringToFile);
-            const fileBuffer = fs.readFileSync(filePath + object.token);
+            fs.writeFileSync(filePath + '/' + object.token, stringToFile);
+            const fileBuffer = fs.readFileSync(filePath + '/' + object.token);
             const fileString = fileBuffer.toString();
             resolve(fileString);
         } catch (error) {
@@ -68,7 +68,7 @@ readToken = (token, filePath) => {
             const fileString = fileBuffer.toString();
             const fileObject = JSON.parse(fileString);
             
-            if ((timestamp - (fileObject.ttl * 1000)) > fileObject.createdAt) {
+            if (fileObject.ttl != 0 && (timestamp - (fileObject.ttl * 1000)) > fileObject.createdAt) {
                 deleteTokenFile(token, filePath);
                 resolve('Token has expired and will be deleted right now');
             } else {
