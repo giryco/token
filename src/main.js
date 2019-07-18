@@ -46,8 +46,20 @@ saveTokenAsFile = (object, filePath) => {
     return new Promise((resolve, reject) => {
         try {
             const stringToFile = JSON.stringify(object);
-            fs.writeFileSync(filePath + '/' + object.token, stringToFile);
-            const fileBuffer = fs.readFileSync(filePath + '/' + object.token);
+            if (filePath.substr(-1) === '/') {
+                fs.writeFileSync(filePath + object.token, stringToFile);
+            } else {
+                fs.writeFileSync(filePath + '/' + object.token, stringToFile);
+            }
+            
+            let fileBuffer;
+            
+            if (filePath.substr(-1) === '/') {
+                fileBuffer = fs.readFileSync(filePath + object.token);
+            } else {
+                fileBuffer = fs.readFileSync(filePath + '/' + object.token);
+            }
+
             const fileString = fileBuffer.toString();
             resolve(fileString);
         } catch (error) {
@@ -64,7 +76,14 @@ readToken = (token, filePath) => {
             }
 
             const timestamp = Date.now();
-            const fileBuffer = fs.readFileSync(filePath + token);
+            let fileBuffer;
+            
+            if (filePath.substr(-1) === '/') {
+                fileBuffer = fs.readFileSync(filePath + token);
+            } else {
+                fileBuffer = fs.readFileSync(filePath + '/' + token);
+            }
+            
             const fileString = fileBuffer.toString();
             const fileObject = JSON.parse(fileString);
             
